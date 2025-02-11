@@ -1,4 +1,4 @@
-import maplibregl from "maplibre-gl";
+import maplibregl, { CustomLayerInterface } from "maplibre-gl";
 
 export class WindLayer {
   private startTime: number;
@@ -11,16 +11,19 @@ export class WindLayer {
     this.startTime = Date.now();
   }
 
-  public getLayer() {
+  public getLayer(): CustomLayerInterface {
     return {
       id: "wind",
-      type: "custom",
+      type: "custom" as const,
       onAdd: this.onAdd.bind(this),
+
+      //@ts-ignore
       render: this.render.bind(this),
+      renderingMode: "2d" as const,
     };
   }
 
-  private onAdd(map: maplibregl.Map, gl: WebGL2RenderingContext) {
+  private onAdd(map: maplibregl.Map, gl: WebGL2RenderingContext): void {
     const vertexSource = `#version 300 es
             uniform mat4 u_matrix;
             uniform float u_time;
@@ -88,7 +91,7 @@ export class WindLayer {
   private render(
     gl: WebGL2RenderingContext,
     matrix: { defaultProjectionData: { mainMatrix: number[] } }
-  ) {
+  ): void {
     if (!this.program || !this.buffer) return;
 
     gl.useProgram(this.program);
