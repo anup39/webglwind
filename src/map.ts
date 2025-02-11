@@ -1,5 +1,6 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { WindLayer } from "./windlayer";
 
 export class Map {
   private map: maplibregl.Map | null = null;
@@ -27,6 +28,13 @@ export class Map {
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${this.API_KEY}`,
       center: [this.lng, this.lat],
       zoom: this.zoom,
+      canvasContextAttributes: { antialias: true },
+    });
+
+    this.map.on("load", () => {
+      // Add wind layer
+      const windLayer = new WindLayer();
+      this.map?.addLayer(windLayer.getLayer());
     });
 
     // Add navigation control
