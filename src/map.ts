@@ -7,7 +7,7 @@ export class Map {
   private mapContainer: HTMLElement;
   private readonly lng: number = 139.753;
   private readonly lat: number = 35.6844;
-  private readonly zoom: number = 14;
+  private readonly zoom: number = 0;
   private readonly API_KEY: string = import.meta.env
     .VITE_MAPTILER_TOKEN as string;
 
@@ -25,7 +25,7 @@ export class Map {
 
     this.map = new maplibregl.Map({
       container: this.mapContainer,
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${this.API_KEY}`,
+      style: `https://api.maptiler.com/maps/satellite/style.json?key=${this.API_KEY}`,
       center: [this.lng, this.lat],
       zoom: this.zoom,
       canvasContextAttributes: { antialias: true },
