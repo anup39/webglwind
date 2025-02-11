@@ -23,6 +23,7 @@ export class WindLayer {
     };
   }
 
+  //@ts-ignore
   private onAdd(map: maplibregl.Map, gl: WebGL2RenderingContext): void {
     const vertexSource = `#version 300 es
             uniform mat4 u_matrix;
